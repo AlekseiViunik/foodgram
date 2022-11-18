@@ -37,7 +37,7 @@ class Recipe(models.Model):
     )
     image = models.ImageField(
         'Картинка',
-        upload_to='recipes',
+        upload_to='recipes/',
         blank=True,
     )
     
@@ -46,10 +46,12 @@ class Recipe(models.Model):
         verbose_name = 'Рецепт'
         verbose_name_plural = 'Рецепты'
         
-    def __str__(self -> str:
+    def __str__(self) -> str:
         return self.text[:15]
-        
-        
+
+
+
+
 class Follow(models.Model):
     user = models.ForeignKey(
         User,
@@ -73,19 +75,3 @@ class Follow(models.Model):
         
     def __str__(self):
         return f'Подписка {self.user.username} на {self.author.username}'
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-# Create your models here.

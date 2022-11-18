@@ -7,7 +7,7 @@ from django.contrib.auth.views import (
     PasswordResetView,
     PasswordResetDoneView,
     PasswordResetConfirmView,
-    PasswordReseteCompleteView,
+    PasswordResetCompleteView,
 )
 
 from . import views
@@ -50,6 +50,13 @@ urlpatterns = [
             template_name='users/password_reset_form.html',
         ),
         name='password_reset_form'
+    ),
+    path(
+        'password_reset/done/',
+        PasswordResetDoneView.as_view(
+            template_name='users/password_reset_done.html',
+        ),
+        name='password_reset_done'
     ),
     path(
         'reset/<uid64>/<token>/',

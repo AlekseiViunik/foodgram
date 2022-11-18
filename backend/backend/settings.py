@@ -28,6 +28,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users',
     'recipes',
+    'core',
+    'about',
 ]
 
 MIDDLEWARE = [
@@ -114,3 +116,5 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+NUMBER_OF_RECIPES = 10
