@@ -1,21 +1,11 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import check_password
-from djoser.serializers import (
-    PasswordSerializer,
-    UserCreateSerializer,
-    UserSerializer
-)
+from djoser.serializers import (PasswordSerializer, UserCreateSerializer,
+                                UserSerializer)
+from recipes.models import (FavoriteRecipe, Ingredient, IngredientAmount,
+                            Recipe, ShoppingCart, Subscribe, Tag)
 from rest_framework import serializers
 
-from recipes.models import (
-    FavoriteRecipe,
-    Ingredient,
-    IngredientAmount,
-    Recipe,
-    ShoppingCart,
-    Subscribe,
-    Tag
-)
 from .fields import Base64ImageField
 
 User = get_user_model()
@@ -77,7 +67,7 @@ class IngredientSerializer(serializers.ModelSerializer):
 class IngredientEditSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(required=True)
     amount = serializers.IntegerField(required=True)
-    
+
     class Meta:
         model = Ingredient
         fields = ('id', 'amount')
@@ -171,7 +161,7 @@ class RecipeEditSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 'Добавьте хотя бы один ингредиент'
             )
-                
+
         tags = data.get('tags')
         if not tags:
             raise serializers.ValidationError(
@@ -183,7 +173,7 @@ class RecipeEditSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 {'cooking_time': 'Готовка должна длиться от 1 до 600 минут'}
             )
-            
+
         return data
 
     def create_ingredients(self, ingredients, recipe):
@@ -331,7 +321,7 @@ class FavoriteRecipeSerializer(serializers.ModelSerializer):
     class Meta:
         model = FavoriteRecipe
         fields = ('id', 'name', 'image', 'cooking_time')
-        
+
     def validate(self, data):
         user = self.context.get('request').user
         recipe = self.context.get('recipe_id')
@@ -375,4 +365,3 @@ class ShoppingCartSerializer(serializers.ModelSerializer):
                 {'errors': 'Рецепт уже в корзине'}
             )
         return data
-

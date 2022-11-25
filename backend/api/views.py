@@ -3,38 +3,22 @@ from django.db.models import Sum
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from djoser.views import UserViewSet
+from recipes.models import (FavoriteRecipe, Ingredient, Recipe, ShoppingCart,
+                            Subscribe, Tag)
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
-from rest_framework.permissions import (
-    SAFE_METHODS,
-    IsAuthenticated,
-    IsAuthenticatedOrReadOnly
-)
+from rest_framework.permissions import (SAFE_METHODS, IsAuthenticated,
+                                        IsAuthenticatedOrReadOnly)
 from rest_framework.response import Response
 
-from recipes.models import (
-    FavoriteRecipe,
-    Ingredient,
-    Recipe,
-    ShoppingCart,
-    Subscribe,
-    Tag
-)
 from .filters import IngredientFilter, RecipeFilter
 from .mixins import CreateDestroyViewSet
 from .permissions import IsAuthorOrReadOnly
-from .serializers import (
-    FavoriteRecipeSerializer,
-    IngredientSerializer,
-    RecipeEditSerializer,
-    RecipeReadSerializer,
-    SetPasswordSerializer,
-    ShoppingCartSerializer,
-    SubscribeSerializer,
-    TagSerializer,
-    UserCreateSerializer, 
-    UserListSerializer
-)
+from .serializers import (FavoriteRecipeSerializer, IngredientSerializer,
+                          RecipeEditSerializer, RecipeReadSerializer,
+                          SetPasswordSerializer, ShoppingCartSerializer,
+                          SubscribeSerializer, TagSerializer,
+                          UserCreateSerializer, UserListSerializer)
 
 User = get_user_model()
 
@@ -55,7 +39,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
         if self.request.method in SAFE_METHODS:
             return RecipeReadSerializer
         return RecipeEditSerializer
-        
+
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
 
@@ -132,7 +116,7 @@ class CustomUserViewSet(UserViewSet):
 
 class SubscribeViewSet(CreateDestroyViewSet):
     serializer_class = SubscribeSerializer
-    
+
     def get_queryset(self):
         return self.request.user.follower.all()
 
@@ -140,7 +124,7 @@ class SubscribeViewSet(CreateDestroyViewSet):
         context = super().get_serializer_context()
         context['author_id'] = self.kwargs.get('user_id')
         return context
-    
+
     def perform_create(self, serializer):
         serializer.save(
             user=self.request.user,
@@ -233,7 +217,8 @@ class ShoppingCartViewSet(CreateDestroyViewSet):
                 {'errors': 'Рецепта нет в корзине'},
                 status=status.HTTP_400_BAD_REQUEST
             )
-        get_object_or_404(ShoppingCart,
+        get_object_or_404(
+            ShoppingCart,
             user=request.user,
             recipe=recipe_id
         ).delete()
