@@ -1,32 +1,33 @@
 from django.urls import include, path
-from rest_framework import routers
+from rest_framework.routers import DefaultRouter
 
-from .views import (CustomUserViewSet, FavoriteRecipeViewSet,
-                    IngredientViewSet, RecipeViewSet, ShoppingCartViewSet,
-                    SubscribeViewSet, TagViewSet)
+from . import views
 
 app_name = 'api'
 
-router = routers.DefaultRouter()
-router.register('users', CustomUserViewSet, basename='users')
-router.register('recipes', RecipeViewSet, basename='recipes')
-router.register('ingredients', IngredientViewSet, basename='ingredients')
-router.register('tags', TagViewSet, basename='tags')
-router.register(
-    r'users/(?P<user_id>\d+)/subscribe', SubscribeViewSet,
-    basename='subscribe'
+v1 = DefaultRouter()
+
+v1.register('tags', views.TagViewSet, basename='tags')
+v1.register('recipes', views.RecipeViewSet, basename='recipes')
+v1.register('ingredients', views.IngredientViewSet, basename='ingredients')
+v1.register(
+    'users/subscriptions',
+    views.UserSubscribeViewSet,
+    basename='users_subscribe'
 )
-router.register(
-    r'recipes/(?P<recipe_id>\d+)/favorite', FavoriteRecipeViewSet,
-    basename='favorite'
-)
-router.register(
-    r'recipes/(?P<recipe_id>\d+)/shopping_cart', ShoppingCartViewSet,
-    basename='shoppingcart'
+v1.register(
+    'users',
+    views.UserSubscribeActionViewSet,
+    basename='users_subscribe_action'
 )
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path(
+        'recipes/download_shopping_cart/',
+        views.CartDownloadView.as_view(),
+        name='shopping_list_download'
+    ),
+    path('', include(v1.urls)),
     path('', include('djoser.urls')),
-    path('auth/', include('djoser.urls.authtoken')),
+    path('auth/', include('djoser.urls.authtoken'))
 ]

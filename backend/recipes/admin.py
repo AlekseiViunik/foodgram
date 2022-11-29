@@ -1,78 +1,50 @@
 from django.contrib import admin
-from django.db.models import Count
 
-from .models import (FavoriteRecipe, Ingredient, IngredientAmount, Recipe,
-                     ShoppingCart, Subscribe, Tag)
-
-
-class IngredientAmountAdmin(admin.TabularInline):
-    model = IngredientAmount
-    autocomplete_fields = ('ingredient',)
+from .models import Amount, Favorite, Ingredient, Recipe, ShoppingCart, Tag
 
 
 class RecipeAdmin(admin.ModelAdmin):
-    inlines = (IngredientAmountAdmin,)
-    list_display = (
-        'id',
-        'name',
-        'author',
-        'text',
-        'pub_date',
-        'favorite_count'
-    )
-    search_fields = ('name', 'author', 'tags')
-    list_filter = ('name', 'author', 'tags', 'pub_date')
-    filter_vertical = ('tags',)
-    empy_value_display = '-пусто-'
+    list_display = ('created', 'name', 'author', 'favorited_count')
+    list_editable = ('name',)
+    list_filter = ('author', 'name', 'tags')
+    ordering = ('created',)
+    readonly_fields = ('favorited_count',)
 
-    def favorite_count(self, obj):
-        return obj.obj_count
+    def favorited_count(self, obj):
+        return obj.favorited.count()
 
-    def get_queryset(self, request):
-        queryset = super().get_queryset(request)
-        return queryset.annotate(
-            obj_count=Count("favorite_recipe", distinct=True),
-        )
+    favorited_count.short_description = 'В избранном'
 
 
 class IngredientAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'unit')
-    search_fields = ('name',)
+    list_display = ('name', 'measurement_unit',)
     list_filter = ('name',)
-    empy_value_display = '-пусто-'
+    ordering = ('id',)
+
+
+class AmountAdmin(admin.ModelAdmin):
+    list_display = ('id', 'amount', 'ingredient', 'recipe')
+    ordering = ('id',)
 
 
 class TagAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'color', 'slug')
-    search_fields = ('name', 'slug')
-    list_filter = ('name', 'slug')
-    empy_value_display = '-пусто-'
-
-
-class FavoriteAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user', 'favorite_recipe')
-    search_fields = ('favorite_recipe',)
-    list_filter = ('id', 'user', 'favorite_recipe')
-    empy_value_display = '-пусто-'
-
-
-class SubscribeAdmin(admin.ModelAdmin):
-    list_display = ('id', 'author', 'user', 'created')
-    search_fields = ('author', 'created')
-    list_filter = ('author', 'user', 'created')
-    empy_value_display = '-пусто-'
+    list_display = ('name', 'color', 'slug')
+    ordering = ('id',)
 
 
 class ShoppingCartAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user', 'recipe')
-    search_fields = ('user', 'recipe')
-    list_filter = ('user', 'recipe')
-    empy_value_display = '-пусто-'
+    list_display = ('user', 'recipe')
+    ordering = ('user',)
+
+
+class FavoriteAdmin(admin.ModelAdmin):
+    list_display = ('user', 'recipe')
+    ordering = ('user',)
 
 
 admin.site.register(Recipe, RecipeAdmin)
 admin.site.register(Ingredient, IngredientAdmin)
+admin.site.register(Amount, AmountAdmin)
 admin.site.register(Tag, TagAdmin)
-admin.site.register(FavoriteRecipe, FavoriteAdmin)
 admin.site.register(ShoppingCart, ShoppingCartAdmin)
-admin.site.register(Subscribe, SubscribeAdmin)
+admin.site.register(Favorite, FavoriteAdmin)
