@@ -34,6 +34,8 @@ class UserListSerializer(serializers.ModelSerializer):
 
 
 class TagSerializer(serializers.ModelSerializer):
+    color = serializers.CharField(required=True)
+    
     class Meta:
         model = Tag
         fields = '__all__'
@@ -108,6 +110,7 @@ class RecipeShortSerializer(RecipeSerializer):
 class RecipeCreateUpdateSerializer(RecipeSerializer):
     ingredients = IngredientPatchCreateSerializer(many=True)
     tags = serializers.ListField(write_only=True)
+    text = serializers.CharField(required=True)
 
     class Meta:
         model = Recipe
