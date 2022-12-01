@@ -1,26 +1,8 @@
 from django.db import models
-
 from users.models import User
 
 
 class Tag(models.Model):
-    BLACK = '#000000'
-    WHITE = '#FFFFFF'
-    RED = '#FF0000'
-    GREEN = '#008000'
-    BLUE = '#0000FF'
-    YELLOW = '#FFFF00'
-    GRAY = '#808080'
-
-    COLORS = (
-        (BLACK, 'Black'),
-        (WHITE, 'White'),
-        (RED, 'Red'),
-        (GREEN, 'Green'),
-        (BLUE, 'Blue'),
-        (YELLOW, 'Yellow'),
-        (GRAY, 'Gray'),
-    )
 
     name = models.CharField(
         verbose_name='Название',
@@ -29,7 +11,7 @@ class Tag(models.Model):
     color = models.CharField(
         verbose_name='Цвет',
         max_length=7,
-        choices=COLORS
+        help_text='7 символов от #000000 до #FFFFFF'
     )
     slug = models.SlugField(
         verbose_name='Slug'

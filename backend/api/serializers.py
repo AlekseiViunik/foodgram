@@ -1,7 +1,9 @@
-from rest_framework import serializers
+import re
 
 from recipes.models import Amount, Ingredient, Recipe, Tag
+from rest_framework import serializers
 from users.models import User
+
 from .fields import Base64ImageField
 
 
@@ -35,6 +37,16 @@ class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
         fields = '__all__'
+
+    def validate(self, data):
+        regex = re.compile('^#(?:[0-9a-fA-F]{6})$')
+        color = data.get('color')
+        color_match = regex.match(color)
+        if not color_match:
+            raise serializers.ValidationError(
+                'Цвет должен быть от #000000 до #FFFFFF'
+            )
+        return data
 
 
 class IngredientSerializer(serializers.ModelSerializer):
@@ -111,6 +123,7 @@ class RecipeCreateUpdateSerializer(RecipeSerializer):
     def validate(self, data):
         ingredients = data.get('ingredients')
         tags = data.get('tags')
+        text = data.get('text')
         if not tags:
             raise serializers.ValidationError(
                 'Добавьте хотя бы один тег'
@@ -129,6 +142,10 @@ class RecipeCreateUpdateSerializer(RecipeSerializer):
         if len(array) == 0:
             raise serializers.ValidationError(
                 'Добавьте хотя бы один ингредиент'
+            )
+        if len(text) > 1000:
+            raise serializers.ValidationError(
+                'Слишком много воды в описании! Покороче, пожалуйста!'
             )
         return data
 
