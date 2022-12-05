@@ -1,3 +1,4 @@
+from django.core.validators import MinValueValidator, RegexValidator
 from django.db import models
 from users.models import User
 
@@ -11,7 +12,11 @@ class Tag(models.Model):
     color = models.CharField(
         verbose_name='Цвет',
         max_length=7,
-        help_text='7 символов от #000000 до #FFFFFF'
+        help_text='7 символов от #000000 до #FFFFFF',
+        validators=RegexValidator(
+            '^#(?:[0-9a-fA-F]{6})$',
+            'Должно быть от #000000 до #FFFFFF'
+        )
     )
     slug = models.SlugField(
         verbose_name='Slug'
@@ -64,7 +69,8 @@ class Recipe(models.Model):
         upload_to='recipes/images/',
     )
     cooking_time = models.PositiveIntegerField(
-        verbose_name='Время приготовления в минутах'
+        verbose_name='Время приготовления в минутах',
+        validators=(MinValueValidator(1, 'Минимум 1 минута'),),
     )
     text = models.TextField(
         verbose_name='Описание'
@@ -85,7 +91,8 @@ class Recipe(models.Model):
 
 class Amount(models.Model):
     amount = models.PositiveIntegerField(
-        verbose_name='Количество'
+        verbose_name='Количество',
+        validators=(MinValueValidator(1, 'Минимум 1'),),
     )
     ingredient = models.ForeignKey(
         Ingredient,
