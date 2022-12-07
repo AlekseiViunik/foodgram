@@ -9,9 +9,7 @@ services:
       - ./.env
 
   web:
-    build:
-      context: ../backend
-      dockerfile: Dockerfile
+    image: doubleice123/foodgram:latest
     restart: always
     volumes:
       - data:/app/data/
@@ -23,9 +21,7 @@ services:
       - ./.env
 
   frontend:
-    build:
-      context: ../frontend
-      dockerfile: Dockerfile
+    image: doubleice123/foodgram_frontend:v1.0.0
     volumes:
       - ../frontend/:/app/result_build/
     depends_on:
