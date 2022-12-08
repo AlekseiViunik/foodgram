@@ -13,12 +13,12 @@ class Tag(models.Model):
         verbose_name='Цвет',
         max_length=7,
         help_text='7 символов от #000000 до #FFFFFF',
-        validators=(
+        validators=[
             RegexValidator(
-                '^#(?:[0-9a-fA-F]{6})$',
-                'Должно быть от #000000 до #FFFFFF'
-            ),
-        )
+                r'^#(?:[0-9a-fA-F]{6})$',
+                message='Должно быть от #000000 до #FFFFFF'
+            )
+        ],
     )
     slug = models.SlugField(
         verbose_name='Slug'
