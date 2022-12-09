@@ -130,3 +130,9 @@ dmypy.json
 
 # .idea
 .idea
+.structure
+.vscode
+
+backend/media/
+frontend/node_modules/
+.front-test/

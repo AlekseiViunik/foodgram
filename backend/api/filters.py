@@ -1,4 +1,5 @@
 import django_filters
+
 from recipes.models import Ingredient, Recipe, Tag
 
 
@@ -6,14 +7,11 @@ class RecipeFilter(django_filters.FilterSet):
     tags = django_filters.filters.ModelMultipleChoiceFilter(
         queryset=Tag.objects.all(),
         field_name='tags__slug',
-        to_field_name='slug'
-    )
+        to_field_name='slug')
     is_favorited = django_filters.filters.NumberFilter(
-        method='favorite_filter'
-    )
+        method='favorite_filter')
     is_in_shopping_cart = django_filters.filters.NumberFilter(
-        method='cart_filter'
-    )
+        method='cart_filter')
 
     def favorite_filter(self, queryset, name, value):
         if value == 1:

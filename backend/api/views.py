@@ -1,13 +1,13 @@
 from django.db.models import Sum
 from django_filters.rest_framework import DjangoFilterBackend
-from recipes.models import Favorite, Ingredient, Recipe, ShoppingCart, Tag
 from rest_framework.decorators import action
 from rest_framework.permissions import SAFE_METHODS, IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet, ViewSet
+
+from recipes.models import Favorite, Ingredient, Recipe, ShoppingCart, Tag
 from users.models import Subscribe, User
 from users.permissions import AllowAuthorOrReadOnly
-
 from .filters import IngredientFilter, RecipeFilter
 from .paginators import CustomPagination
 from .serializers import (IngredientSerializer, RecipeCreateUpdateSerializer,
@@ -63,12 +63,9 @@ class CartDownloadView(APIView):
     def get(self, request):
         cart = request.user.cart.values(
             'recipe__ingredients__ingredient__name',
-            'recipe__ingredients__ingredient__measurement_unit'
-        ).order_by(
-            'recipe__ingredients__ingredient__name'
-        ).annotate(
-            total=Sum('recipe__ingredients__amount')
-        )
+            'recipe__ingredients__ingredient__measurement_unit').order_by(
+            'recipe__ingredients__ingredient__name').annotate(
+            total=Sum('recipe__ingredients__amount'))
         return shopping_list_pdf(cart)
 
 

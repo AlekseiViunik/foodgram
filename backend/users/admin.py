@@ -5,15 +5,8 @@ from .models import Subscribe, User
 
 
 class CustomUserAdmin(UserAdmin):
-    list_display = (
-        'id',
-        'username',
-        'email',
-        'first_name',
-        'last_name',
-        'recipes_count',
-        'subscribers_count',
-    )
+    list_display = ('id', 'username', 'email', 'first_name',
+                    'last_name', 'recipes_count', 'subscribers_count',)
     list_filter = ('username', 'email')
     ordering = ('id',)
 

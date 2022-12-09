@@ -35,7 +35,7 @@ class UserListSerializer(serializers.ModelSerializer):
 
 class TagSerializer(serializers.ModelSerializer):
     color = serializers.CharField(required=True)
-
+    
     class Meta:
         model = Tag
         fields = '__all__'

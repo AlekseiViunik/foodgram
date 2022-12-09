@@ -12,6 +12,7 @@ from rest_framework.status import (HTTP_201_CREATED, HTTP_204_NO_CONTENT,
 
 
 def add_remove(self, request, target, obj, target_obj):
+    """ Функция для подписок, пополнения корзины или лайков пользователем """
 
     SUCESS_DELETE = {
         'detail': f"Success delete from your {obj.__name__}'s list"}
@@ -43,6 +44,7 @@ def add_remove(self, request, target, obj, target_obj):
 
 
 def shopping_list_pdf(cart):
+    """ Выгрузка списка покупок в pdf """
 
     buffer = BytesIO()
     can = Canvas(buffer)
@@ -59,7 +61,7 @@ def shopping_list_pdf(cart):
     can.setTitle('Список покупок')
 
     can.setFont(SANS_BOLD_NAME, 32)
-    can.drawString(100, 750, 'foodgram')
+    can.drawString(100, 750, 'backend')
     can.setFont(SANS_REGULAR_NAME, 13)
     can.drawString(100, 725, 'Ваш продуктовый помощник')
     can.line(100, 715, 500, 715)

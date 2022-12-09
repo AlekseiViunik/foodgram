@@ -5,17 +5,17 @@ from . import views
 
 app_name = 'api'
 
-v1 = DefaultRouter()
+v10 = DefaultRouter()
 
-v1.register('tags', views.TagViewSet, basename='tags')
-v1.register('recipes', views.RecipeViewSet, basename='recipes')
-v1.register('ingredients', views.IngredientViewSet, basename='ingredients')
-v1.register(
+v10.register('tags', views.TagViewSet, basename='tags')
+v10.register('recipes', views.RecipeViewSet, basename='recipes')
+v10.register('ingredients', views.IngredientViewSet, basename='ingredients')
+v10.register(
     'users/subscriptions',
     views.UserSubscribeViewSet,
     basename='users_subscribe'
 )
-v1.register(
+v10.register(
     'users',
     views.UserSubscribeActionViewSet,
     basename='users_subscribe_action'
@@ -27,7 +27,7 @@ urlpatterns = [
         views.CartDownloadView.as_view(),
         name='shopping_list_download'
     ),
-    path('', include(v1.urls)),
+    path('', include(v10.urls)),
     path('', include('djoser.urls')),
     path('auth/', include('djoser.urls.authtoken'))
 ]

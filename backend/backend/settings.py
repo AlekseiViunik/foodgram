@@ -1,21 +1,19 @@
 import os
+from pathlib import Path
 
 from dotenv import load_dotenv
 
 load_dotenv()
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv(
-    'SECRET_KEY',
-    default='set_it_in_env_file'
-)
+    'DJANGO_SECRET_KEY',
+    default="change-me-in-env-if-the-project-is-not-running-in-demo")
 
 DEBUG = False
 
 ALLOWED_HOSTS = ['*']
-
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -63,7 +61,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
-
 DATABASES = {
     'default': {
         'ENGINE': os.getenv('DB_ENGINE', default='django.db.backends.postgresql'),
@@ -75,40 +72,31 @@ DATABASES = {
     }
 }
 
-
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
-]
+        'NAME':
+        'django.contrib.auth.password_validation.UserAttributeSimilarityValidator', },
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator', },
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator', },
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator', }, ]
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
     ),
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 10,
+    'PAGE_SIZE': 20,
 }
 
-LANGUAGE_CODE = 'ru-ru'
+LANGUAGE_CODE = "ru"
 
-TIME_ZONE = os.getenv('TIME_ZONE', default='UTC')
+TIME_ZONE = "Europe/Moscow"
 
 USE_I18N = True
 
 USE_L10N = True
 
 USE_TZ = True
-
 
 STATIC_URL = '/static/'
 
