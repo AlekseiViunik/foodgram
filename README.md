@@ -15,7 +15,7 @@
 
 ## Адрес сайта
 
-![foodgram](https://www.doubleicefoodgram.hopto.org/)
+![foodgram](www.doubleicefoodgram.hopto.org/)
 
 ## Запуск проекта в dev режиме
 

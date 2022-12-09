@@ -73,7 +73,7 @@ class Recipe(models.Model):
         upload_to='recipes/images/',
     )
     cooking_time = models.PositiveIntegerField(
-        verbose_name='Время приготовления в минутах'
+        verbose_name='Время приготовления в минутах',
         validators=(MinValueValidator(1, 'Минимум 1 минута'),),
     )
     text = models.TextField(
@@ -95,7 +95,7 @@ class Recipe(models.Model):
 
 class Amount(models.Model):
     amount = models.PositiveIntegerField(
-        verbose_name='Количество'
+        verbose_name='Количество',
         validators=(MinValueValidator(1, 'Минимум 1'),),
     )
     ingredient = models.ForeignKey(
