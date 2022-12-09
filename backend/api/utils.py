@@ -61,7 +61,7 @@ def shopping_list_pdf(cart):
     can.setTitle('Список покупок')
 
     can.setFont(SANS_BOLD_NAME, 32)
-    can.drawString(100, 750, 'backend')
+    can.drawString(100, 750, 'Foodgram')
     can.setFont(SANS_REGULAR_NAME, 13)
     can.drawString(100, 725, 'Ваш продуктовый помощник')
     can.line(100, 715, 500, 715)
