@@ -133,9 +133,14 @@ class RecipeCreateUpdateSerializer(RecipeSerializer):
             )
         array = []
         for ingredient in ingredients:
-            if ingredient.get('amount') <= 0:
+            amount_of_ingredients = ingredient.get('amount')
+            if amount_of_ingredients <= 0:
                 raise serializers.ValidationError(
                     'Значение ингредиента должно быть больше 0'
+                )
+            if amount_of_ingredients > 10000:
+                raise serializers.ValidationError(
+                    'Значение ингредиента должно быть меньше 10000'
                 )
             array.append(ingredient.get('id'))
         if len(array) != len(set(array)):
