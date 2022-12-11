@@ -1,5 +1,5 @@
 # Foodgram
-![Python version](https://img.shields.io/badge/python-3.9-yellow) ![Django version](https://img.shields.io/badge/django-3.2-red)
+![Python version](https://img.shields.io/badge/python-3.10-yellow) ![Django version](https://img.shields.io/badge/django-3.2-red)
 
 
 ![workflow](https://github.com/GoodLifeSeeker/foodgram-project-react/actions/workflows/main.yml/badge.svg)
