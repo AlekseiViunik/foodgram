@@ -9,7 +9,7 @@
 
 ## Технологии
 
-- [Python](https://www.python.org/) 3.9+
+- [Python](https://www.python.org/) 3.10
 - [django](https://github.com/django/django) 3.2
 - [django-rest-framework](https://github.com/encode/django-rest-framework)
   3.14
