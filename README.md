@@ -2,8 +2,6 @@
 ![Python version](https://img.shields.io/badge/python-3.10-yellow) ![Django version](https://img.shields.io/badge/django-3.2-red)
 
 
-![workflow](https://github.com/GoodLifeSeeker/foodgram-project-react/actions/workflows/main.yml/badge.svg)
-
 Сервис "Продуктовый помощник". На этом сервисе пользователи смогут публиковать рецепты, подписываться на публикации других пользователей, добавлять понравившиеся рецепты в список «Избранное», а перед походом в магазин скачивать сводный список продуктов, необходимых для приготовления одного или нескольких выбранных блюд.
 
 
