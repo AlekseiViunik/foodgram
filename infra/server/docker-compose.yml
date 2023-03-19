@@ -13,7 +13,7 @@ services:
       - ./.env
 
   web:
-    image: ${DOCKER_USERNAME}/${DOCKER_BACKEND}
+    image: doubleice123/foodgram_backend:v2.0.0
     restart: always
     volumes:
       - static:/app/static/
@@ -24,7 +24,7 @@ services:
       - ./.env
 
   frontend:
-    image: ${DOCKER_USERNAME}/${DOCKER_FRONT}
+    image: doubleice123/foodgram_frontend:v1.0.0
     volumes:
       - ./frontend/:/app/result_build/
 
