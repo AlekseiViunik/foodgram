@@ -13,8 +13,7 @@
   3.14
 
 ## Адрес сайта
-doubleicefoodgram.hopto.org
-(сервер временно остановлен)
+viunk.hopto.org
 
 ## Запуск проекта в dev режиме
 
